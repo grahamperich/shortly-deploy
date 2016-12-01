@@ -23,7 +23,15 @@ module.exports = function(grunt) {
     uglify: {
       target: {
         files: {
-          'public/dist/concat.min.js': ['public/dist/concat.js']
+          'public/dist/serverConcat.js': ['public/dist/serverConcat.js'],
+          'public/dist/clientConcat.js': ['public/dist/clientConcat.js']
+        }
+      }
+    },
+    cssmin: {
+      target: {
+        files: {
+          'public/dist/style.min.css': ['public/style.css']
         }
       }
     },
@@ -50,14 +58,15 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['./app/**/*.js'],
-        dest: './public/dist/concat.js',
+        dest: './public/dist/serverConcat.js'
       },
+      extras: {
+        src: ['./public/client/*.js'],
+        dest: './public/dist/clientConcat.js'
+      }
     },
 
-    clean: ['./public/dist/*.js'],
-
-    cssmin: {
-    },
+    clean: ['./public/dist/*'],
 
     watch: {
       scripts: {
@@ -101,12 +110,11 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
-  grunt.registerTask('test', [
-    'mochaTest'
-  ]);
+  grunt.registerTask('test', ['mochaTest']);
 
-  grunt.registerTask('build', [
-  ]);
+  grunt.registerTask('build', []);
+
+  grunt.registerTask('min', ['uglify', 'cssmin']);
 
   grunt.registerTask('push', ['gitpush']);
 
