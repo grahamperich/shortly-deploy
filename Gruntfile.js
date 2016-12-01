@@ -23,8 +23,8 @@ module.exports = function(grunt) {
     uglify: {
       target: {
         files: {
-          'public/dist/serverConcat.js': ['public/dist/serverConcat.js'],
-          'public/dist/clientConcat.js': ['public/dist/clientConcat.js']
+          'public/dist/clientConcat.js': ['public/dist/clientConcat.js'],
+          'public/dist/libConcat.js': ['public/dist/libConcat.js']
         }
       }
     },
@@ -56,13 +56,13 @@ module.exports = function(grunt) {
       options: {
         separator: ';',
       },
-      dist: {
-        src: ['./app/**/*.js'],
-        dest: './public/dist/serverConcat.js'
-      },
-      extras: {
+      client: {
         src: ['./public/client/*.js'],
         dest: './public/dist/clientConcat.js'
+      },
+      lib: {
+        src: ['./public/lib/jquery.js', './public/lib/underscore.js', './public/lib/backbone.js', './public/lib/handlebars.js'],
+        dest: './public/dist/libConcat.js'
       }
     },
 
