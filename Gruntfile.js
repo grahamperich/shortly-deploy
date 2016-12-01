@@ -21,6 +21,11 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      target: {
+        files: {
+          'public/dist/concat.min.js': ['public/dist/concat.js']
+        }
+      }
     },
 
     eslint: {
@@ -38,6 +43,18 @@ module.exports = function(grunt) {
         }
       }
     },
+
+    concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: ['./app/**/*.js'],
+        dest: './public/dist/concat.js',
+      },
+    },
+
+    clean: ['./public/dist/*.js'],
 
     cssmin: {
     },
@@ -74,6 +91,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-git');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('server-dev', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
@@ -89,6 +107,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
   ]);
+
+  grunt.registerTask('push', ['gitpush']);
+
+  grunt.registerTask('cat', ['clean', 'concat']);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
